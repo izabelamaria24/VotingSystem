@@ -6,7 +6,7 @@ public class CandidateBallot extends Ballot {
     private int[] votes; // count votes for each candidate
 
     public CandidateBallot(List<String> candidates) {
-        super("CandidateBallot");
+        super(BallotType.CANDIDATE_BALLOT);
         this.candidates = candidates;
         this.votes = new int[candidates.size()];
     }

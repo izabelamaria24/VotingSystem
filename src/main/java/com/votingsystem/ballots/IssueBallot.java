@@ -8,7 +8,7 @@ public class IssueBallot extends Ballot {
     // votes will be yes/no for this type of ballot
 
     public IssueBallot(List<String> issues) {
-        super("IssueBallot");
+        super(BallotType.ISSUE_BALLOT);
         this.issues = issues;
         this.votes = new int[issues.size()];
     }

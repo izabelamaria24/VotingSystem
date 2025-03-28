@@ -1,9 +1,9 @@
 package main.java.com.votingsystem.ballots;
 
 public abstract class Ballot {
-    private String ballotType;
+    private BallotType ballotType;
 
-    public Ballot(String ballotType) {
+    public Ballot(BallotType ballotType) {
         this.ballotType = ballotType;
     }
 
