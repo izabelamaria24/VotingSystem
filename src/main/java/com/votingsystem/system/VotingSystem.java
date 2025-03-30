@@ -35,4 +35,13 @@ public class VotingSystem {
             ballots.put(BallotType.ISSUE_BALLOT, new IssueBallot(options));
         }
     }
+
+    public void castVote(Voter voter, Ballot ballot, String option) {
+        if (voters.containsKey(voter.getCnp()) && ballots.containsKey(ballot.getType())) {
+            ballot.castVote(option);
+
+        } else {
+            System.out.println("Invalid voter or ballot.");
+        }
+    }
 }
