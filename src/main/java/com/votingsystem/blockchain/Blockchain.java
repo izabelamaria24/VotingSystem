@@ -1,13 +1,16 @@
 package main.java.com.votingsystem.blockchain;
+
+import main.java.com.votingsystem.models.Vote;
+
 import java.util.ArrayList;
 import java.util.List;
-import main.java.com.votingsystem.models.Vote;
 
 public class Blockchain {
     private List<Block> chain;
 
     public Blockchain() {
         this.chain = new ArrayList<>();
+        this.chain.add(new Block("0", java.time.LocalDateTime.now().toString(), new ArrayList<>()));
     }
 
     public void addBlock(List<Vote> votes) {
