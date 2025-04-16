@@ -1,6 +1,6 @@
 package main.java.com.votingsystem.blockchain;
-import main.java.com.votingsystem.models.Vote;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.List;
 
@@ -9,9 +9,9 @@ public class Block {
     private String hash;
     private String timestamp;
 
-    private List<Vote> votes; // list of votes, a block has multiple votes
+    private List<String> votes; // list of votes, a block has multiple votes
 
-    public Block(String previousHash, String timestamp, List<Vote> votes) {
+    public Block(String previousHash, String timestamp, List<String> votes) {
         this.previousHash = previousHash;
         this.timestamp = timestamp;
         this.votes = votes;
@@ -22,7 +22,7 @@ public class Block {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             String input = previousHash + timestamp + votes.toString();
-            byte[] hashBytes = digest.digest(input.getBytes("UTF-8"));
+            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
 
             for (byte b : hashBytes) {
@@ -41,7 +41,7 @@ public class Block {
     }
 
     public void displayVotes() {
-        for (Vote vote : votes) {
+        for (String vote : votes) {
             System.out.println(vote);
         }
     }

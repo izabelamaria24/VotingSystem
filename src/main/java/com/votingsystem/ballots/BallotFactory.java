@@ -8,7 +8,6 @@ public class BallotFactory {
             case CANDIDATE_BALLOT -> new CandidateBallot(options);
             case PARTY_BALLOT -> new PartyBallot(options);
             case ISSUE_BALLOT -> new IssueBallot(options);
-            default -> throw new IllegalArgumentException("Invalid ballot type: " + ballotType);
         };
     }
 }

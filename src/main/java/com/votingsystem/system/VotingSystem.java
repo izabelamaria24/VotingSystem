@@ -8,15 +8,10 @@ import main.java.com.votingsystem.security.AuditLog;
 import main.java.com.votingsystem.security.EncryptionUtil;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import javax.security.auth.kerberos.EncryptionKey;
-import java.security.AsymmetricKey;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-import java.time.LocalDateTime;
 
 public class VotingSystem {
     private Blockchain blockchain;
@@ -56,7 +51,7 @@ public class VotingSystem {
                     String encryptedVote = EncryptionUtil.encrypt(vote.toString(), encryptionKey);
 
                     ballot.castVote(option);
-                    blockchain.addBlock(List.of(vote));
+                    blockchain.addBlock(List.of(encryptedVote));
 
                     AuditLog.log("Vote casted for voter: " + voter.getCnp());
                 } else {
@@ -71,5 +66,13 @@ public class VotingSystem {
             System.out.println("Invalid voter or ballot");
             AuditLog.log("Invalid voter or ballot for voter: " + voter.getCnp());
         }
+    }
+
+    public Ballot getBallot(BallotType ballotType) {
+        return ballots.get(ballotType);
+    }
+
+    public Blockchain getBlockchain() {
+        return blockchain;
     }
 }

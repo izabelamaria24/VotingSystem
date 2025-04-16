@@ -33,7 +33,7 @@ public class Voter {
     }
 
     public boolean verifyVote(String voteHash, byte[] signatureBytes) throws Exception {
-        Signature signature = Signature.getInstance("SJA256withRSA");
+        Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initVerify(publicKey);
         signature.update(voteHash.getBytes(StandardCharsets.UTF_8));
         return signature.verify(signatureBytes);
