@@ -1,6 +1,7 @@
 package main.java.com.votingsystem.system;
 
 import main.java.com.votingsystem.ballots.*;
+import main.java.com.votingsystem.blockchain.Block;
 import main.java.com.votingsystem.blockchain.Blockchain;
 import main.java.com.votingsystem.models.Vote;
 import main.java.com.votingsystem.models.Voter;

@@ -12,6 +12,13 @@ public class AuditLog {
         System.out.println(logEntry);
     }
 
+    public static void displayLogs() {
+        System.out.println("Audit Logs:");
+        for (String log : logs) {
+            System.out.println(log);
+        }
+    }
+
     public static List<String> getLogs() {
         return logs;
     }
