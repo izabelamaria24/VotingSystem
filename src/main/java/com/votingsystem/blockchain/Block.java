@@ -11,14 +11,17 @@ public class Block {
 
     private List<String> votes; // list of votes, a block has multiple votes
 
+    private int nonce; // for PoW
+
     public Block(String previousHash, String timestamp, List<String> votes) {
         this.previousHash = previousHash;
         this.timestamp = timestamp;
         this.votes = votes;
+        this.nonce = 0;
         this.hash = calculateHash();
     }
 
-    private String calculateHash() {
+    public String calculateHash() {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             String input = previousHash + timestamp + votes.toString();
@@ -36,8 +39,21 @@ public class Block {
         }
     }
 
+    public void mineBlock(int difficulty) {
+        String target = "0".repeat(difficulty);
+        while(!hash.substring(0, difficulty).equals(target)) {
+            nonce++;
+            hash = calculateHash();
+        }
+        System.out.println("Block has been mined");
+    }
+
     public String getHash() {
         return hash;
+    }
+
+    public String getPreviousHash() {
+        return previousHash;
     }
 
     public void displayVotes() {
