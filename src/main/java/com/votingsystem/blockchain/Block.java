@@ -9,9 +9,9 @@ public class Block {
     private String hash;
     private String timestamp;
 
-    private List<String> votes; // list of votes, a block has multiple votes
+    private List<String> votes;
 
-    private int nonce; // for PoW
+    private int nonce; 
 
     public Block(String previousHash, String timestamp, List<String> votes) {
         this.previousHash = previousHash;
@@ -24,7 +24,7 @@ public class Block {
     public String calculateHash() {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            String input = previousHash + timestamp + votes.toString();
+            String input = previousHash + timestamp + votes.toString() + nonce;
             byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
 
@@ -40,12 +40,16 @@ public class Block {
     }
 
     public void mineBlock(int difficulty) {
-        String target = "0".repeat(difficulty);
-        while(!hash.substring(0, difficulty).equals(target)) {
+        String target = "0".repeat(difficulty); // Target hash prefix (e.g., "0000" for difficulty 4)
+        System.out.println("Mining block...");
+        while (!hash.substring(0, difficulty).equals(target)) {
             nonce++;
             hash = calculateHash();
+            if (nonce % 100000 == 0) { 
+                System.out.println("Current nonce: " + nonce + ", Current hash: " + hash);
+            }
         }
-        System.out.println("Block has been mined");
+        System.out.println("Block mined! Hash: " + hash);
     }
 
     public String getHash() {
@@ -60,5 +64,9 @@ public class Block {
         for (String vote : votes) {
             System.out.println(vote);
         }
+    }
+
+    public List<String> getVotes() {
+        return votes;
     }
 }
