@@ -1,9 +1,9 @@
-package main.java.com.votingsystem.ballots;
+package com.votingsystem.ballots;
 import java.util.List;
 
 public class CandidateBallot extends Ballot {
     private List<String> candidates;
-    private int[] votes; // count votes for each candidate
+    private int[] votes; 
 
     public CandidateBallot(List<String> candidates) {
         super(BallotType.CANDIDATE_BALLOT);
@@ -19,6 +19,14 @@ public class CandidateBallot extends Ballot {
             System.out.println(voteOption + " casted to " + candidates.get(index));
         } else {
             System.out.println("Candidate not valid!");
+        }
+    }
+
+    @Override
+    public void getResults() {
+        System.out.println("Candidate Election Results:");
+        for (int i = 0; i < candidates.size(); i++) {
+            System.out.println(candidates.get(i) + ": " + votes[i] + " votes");
         }
     }
 }

@@ -1,11 +1,11 @@
-package main.java.com.votingsystem.blockchain;
+package com.votingsystem.blockchain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.crypto.SecretKey;
 
-import main.java.com.votingsystem.security.EncryptionUtil;
+import com.votingsystem.security.EncryptionUtil;
 
 public class Blockchain {
     private List<Block> chain;

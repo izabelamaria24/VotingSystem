@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.security;
+package com.votingsystem.security;
 
 import java.util.List;
 import java.util.ArrayList;

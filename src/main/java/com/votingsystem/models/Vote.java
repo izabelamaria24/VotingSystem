@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.models;
+package com.votingsystem.models;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

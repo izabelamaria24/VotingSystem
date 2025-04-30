@@ -1,6 +1,7 @@
-import main.java.com.votingsystem.ballots.BallotType;
-import main.java.com.votingsystem.models.Voter;
-import main.java.com.votingsystem.system.VotingSystem;
+package com.votingsystem;
+import com.votingsystem.ballots.BallotType;
+import com.votingsystem.models.Voter;
+import com.votingsystem.system.VotingSystem;
 
 import java.util.Arrays;
 import java.util.Scanner;

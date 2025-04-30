@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.ballots;
+package com.votingsystem.ballots;
 
 import java.util.List;
 

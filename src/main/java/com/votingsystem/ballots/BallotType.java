@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.ballots;
+package com.votingsystem.ballots;
 
 public enum BallotType {
     CANDIDATE_BALLOT,

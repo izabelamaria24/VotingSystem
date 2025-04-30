@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.ballots;
+package com.votingsystem.ballots;
 
 public abstract class Ballot {
     private BallotType ballotType;
@@ -8,4 +8,8 @@ public abstract class Ballot {
     }
 
     public abstract void castVote(String voteOption);
+
+    public void getResults() {
+        System.out.println("Results for " + ballotType + "ballot:");
+    }
 }

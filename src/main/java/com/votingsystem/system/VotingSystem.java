@@ -1,50 +1,71 @@
-package main.java.com.votingsystem.system;
+package com.votingsystem.system;
 
-import main.java.com.votingsystem.ballots.*;
-import main.java.com.votingsystem.blockchain.Blockchain;
-import main.java.com.votingsystem.models.Vote;
-import main.java.com.votingsystem.models.Voter;
-import main.java.com.votingsystem.security.AuditLog;
-import main.java.com.votingsystem.security.EncryptionUtil;
+import com.votingsystem.ballots.*;
+import com.votingsystem.blockchain.Blockchain;
+import com.votingsystem.database.BallotDAO;
+import com.votingsystem.database.VoterDAO;
+import com.votingsystem.models.Vote;
+import com.votingsystem.models.Voter;
+import com.votingsystem.security.AuditLog;
+import com.votingsystem.security.EncryptionUtil;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 public class VotingSystem {
     private final Blockchain blockchain;
-    private final Map<String, Voter> voters;
-    private final Map<BallotType, Ballot> ballots;
     private final SecretKey encryptionKey;
+    private final VoterDAO voterDAO;
+    private final BallotDAO ballotDAO;
 
     public VotingSystem() throws Exception {
         blockchain = new Blockchain();
-        voters = new HashMap<>();
-        ballots = new HashMap<>();
         encryptionKey = EncryptionUtil.generateKey();
+        voterDAO = VoterDAO.getInstance();
+        ballotDAO = BallotDAO.getInstance();
     }
 
     public void addVoter(Voter voter) {
-        voters.put(voter.getCnp(), voter);
-        logAction("Added voter: " + voter.getCnp());
+        try {
+            voterDAO.saveVoter(voter); // Save voter to the database
+            logAction("Added voter: " + voter.getCnp());
+        } catch (Exception e) {
+            System.out.println("Error saving voter: " + e.getMessage());
+        }
     }
 
     public void addBallot(BallotType ballotType, List<String> options) {
-        Ballot ballot = BallotFactory.createBallot(ballotType, options);
-        ballots.put(ballotType, ballot);
-        logAction("Added ballot: " + ballotType);
+        try {
+            ballotDAO.saveBallot(ballotType, options); // Save ballot to the database
+            logAction("Added ballot: " + ballotType);
+        } catch (Exception e) {
+            System.out.println("Error saving ballot: " + e.getMessage());
+        }
+    }
+
+    public Ballot getBallot(BallotType ballotType) {
+        try {
+            List<String> options = ballotDAO.getBallotOptions(ballotType.ordinal());
+            if (options != null && !options.isEmpty()) {
+                return BallotFactory.createBallot(ballotType, options);
+            } else {
+                System.out.println("No ballot found for type: " + ballotType);
+            }
+        } catch (Exception e) {
+            System.out.println("Error retrieving ballot: " + e.getMessage());
+        }
+        return null;
     }
 
     public void castVote(Voter voter, Ballot ballot, String option) {
-        if (!voters.containsKey(voter.getCnp())) {
-            System.out.println("Invalid voter or ballot");
-            logAction("Invalid voter or ballot for voter: " + voter.getCnp());
-            return;
-        }
-
         try {
+            if (voterDAO.getVoter(voter.getCnp()) == null) {
+                System.out.println("Invalid voter or ballot");
+                logAction("Invalid voter or ballot for voter: " + voter.getCnp());
+                return;
+            }
+
             Vote vote = new Vote(voter, option, LocalDateTime.now());
             String hash = vote.hashVote();
             byte[] signature = voter.signVote(hash);
@@ -64,12 +85,21 @@ public class VotingSystem {
         }
     }
 
-    public void displayAuditLogs() {
-        AuditLog.displayLogs();
+    public void displayResults(BallotType ballotType) {
+        try {
+            List<String> options = ballotDAO.getBallotOptions(ballotType.ordinal());
+            if (options != null) {
+                System.out.println("Results for " + ballotType + ": " + options);
+            } else {
+                System.out.println("No ballot found for type: " + ballotType);
+            }
+        } catch (Exception e) {
+            System.out.println("Error retrieving ballot results: " + e.getMessage());
+        }
     }
 
-    public Ballot getBallot(BallotType ballotType) {
-        return ballots.get(ballotType);
+    public void displayAuditLogs() {
+        AuditLog.displayLogs();
     }
 
     public Blockchain getBlockchain() {
@@ -77,7 +107,12 @@ public class VotingSystem {
     }
 
     public Voter getVoter(String cnp) {
-        return voters.get(cnp);
+        try {
+            return voterDAO.getVoter(cnp); 
+        } catch (Exception e) {
+            System.out.println("Error retrieving voter: " + e.getMessage());
+            return null;
+        }
     }
 
     private void logAction(String action) {

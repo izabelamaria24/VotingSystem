@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.ballots;
+package com.votingsystem.ballots;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +25,14 @@ public class PartyBallot extends Ballot {
             System.out.println("Vote casted for party: " + voteOption);
         } else {
             System.out.println("Invalid party!");
+        }
+    }
+
+    @Override
+    public void getResults() {
+        System.out.println("Party Election Results:");
+        for (Map.Entry<String, Integer> entry : votes.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue() + " votes");
         }
     }
 }

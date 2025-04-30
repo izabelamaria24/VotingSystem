@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.security;
+package com.votingsystem.security;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

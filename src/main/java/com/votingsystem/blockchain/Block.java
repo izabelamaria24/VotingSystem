@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.blockchain;
+package com.votingsystem.blockchain;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

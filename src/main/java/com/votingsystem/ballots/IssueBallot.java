@@ -1,4 +1,4 @@
-package main.java.com.votingsystem.ballots;
+package com.votingsystem.ballots;
 import java.util.List;
 
 public class IssueBallot extends Ballot {
@@ -21,6 +21,14 @@ public class IssueBallot extends Ballot {
             System.out.println("Vote casted for issue: " + voteOption);
         } else {
             System.out.println("Invalid issue!");
+        }
+    }
+
+    @Override
+    public void getResults() {
+        System.out.println("Issue Voting Results:");
+        for (int i = 0; i < issues.size(); i++) {
+            System.out.println(issues.get(i) + ": " + votes[i] + " votes");
         }
     }
 }
