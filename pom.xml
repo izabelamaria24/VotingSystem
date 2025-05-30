@@ -18,6 +18,18 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.5</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.7.1</version>
+        </dependency>
     </dependencies>
 
         <!-- filepath: d:\coding\VotingSystem\pom.xml -->
@@ -41,3 +53,4 @@
         </plugins>
     </build>
 </project>
+

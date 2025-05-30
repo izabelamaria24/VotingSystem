@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 public class DatabaseUtil {
+    private static DatabaseUtil instance;
     private static final String URL;
     private static final String USER;
     private static final String PASSWORD;
@@ -22,7 +23,17 @@ public class DatabaseUtil {
         }
     }
 
+    private DatabaseUtil() {}
+
+    public static synchronized DatabaseUtil getInstance() {
+        if (instance == null) {
+            instance = new DatabaseUtil();
+        }
+        return instance;
+    }
+
     public static Connection getConnection() throws Exception {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
+

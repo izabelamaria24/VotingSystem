@@ -12,4 +12,8 @@ public abstract class Ballot {
     public void getResults() {
         System.out.println("Results for " + ballotType + "ballot:");
     }
+
+    public BallotType getBallotType() {
+        return ballotType;
+    }
 }
