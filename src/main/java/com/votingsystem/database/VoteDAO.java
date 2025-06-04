@@ -66,7 +66,7 @@ public class VoteDAO {
             stmt.setInt(1, voterId);
             stmt.setString(2, ballotType.name());
             ResultSet rs = stmt.executeQuery();
-            return rs.next(); // Returns true if the voter has already voted on this ballot type
+            return rs.next();
         }
     }
 

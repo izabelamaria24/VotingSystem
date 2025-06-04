@@ -7,10 +7,8 @@ import java.util.List;
 public class DatabasePopulator {
     public static void main(String[] args) {
         try {
-            // First, make sure the database tables are created
             SetupDatabase.main(new String[]{});
 
-            // --- Insert voters ---
             VoterDAO voterDAO = VoterDAO.getInstance();
             int voterId1 = voterDAO.saveVoterAndReturnId("1234567890123", "public_key_1");
             int voterId2 = voterDAO.saveVoterAndReturnId("9876543210987", "public_key_2");
@@ -18,14 +16,12 @@ public class DatabasePopulator {
 
             System.out.println("Voters inserted successfully!");
 
-            // --- Insert ballots ---
             BallotDAO ballotDAO = BallotDAO.getInstance();
             int ballotId1 = ballotDAO.saveBallotAndReturnId(BallotType.PRESIDENTIAL, List.of("Alice", "Bob", "Charlie"));
             int ballotId2 = ballotDAO.saveBallotAndReturnId(BallotType.PARLIAMENTARY, List.of("PartyA", "PartyB", "PartyC"));
 
             System.out.println("Ballots inserted successfully!");
 
-            // --- Insert votes ---
             VoteDAO voteDAO = VoteDAO.getInstance();
             voteDAO.saveVote(voterId1, ballotId1, "Alice");
             voteDAO.saveVote(voterId2, ballotId1, "Bob");

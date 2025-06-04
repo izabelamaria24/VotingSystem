@@ -34,7 +34,7 @@ public class VotingSystem {
 
     public void addVoter(Voter voter) {
         try {
-            voterDAO.saveVoter(voter); // Save voter to the database
+            voterDAO.saveVoter(voter);
             logAction("Added voter: " + voter.getCnp());
         } catch (Exception e) {
             System.out.println("Error saving voter: " + e.getMessage());
@@ -43,7 +43,7 @@ public class VotingSystem {
 
     public void addBallot(BallotType ballotType, List<String> options) {
         try {
-            ballotDAO.saveBallot(ballotType, options); // Save ballot to the database
+            ballotDAO.saveBallot(ballotType, options);
             logAction("Added ballot: " + ballotType);
         } catch (Exception e) {
             System.out.println("Error saving ballot: " + e.getMessage());
@@ -89,7 +89,6 @@ public class VotingSystem {
 
     public void castVote(Voter voter, BallotType type, int ballotId, String option) {
         try {
-            // First check if voter exists in database
             Voter dbVoter = voterDAO.getVoter(voter.getCnp());
             if (dbVoter == null) {
                 System.out.println("Error: Voter not registered in the system");
@@ -97,7 +96,6 @@ public class VotingSystem {
                 return;
             }
 
-            // Check if voter has already voted on this specific ballot
             if (voteDAO.hasVoted(voter.getCnp(), ballotId)) {
                 System.out.println("You have already voted on this ballot!");
                 logAction("Attempted duplicate vote by voter: " + voter.getCnp());
@@ -110,7 +108,6 @@ public class VotingSystem {
                 return;
             }
 
-            // Validate vote option
             if (!isValidVoteOption(ballot, option)) {
                 System.out.println("Invalid vote option!");
                 logAction("Invalid vote option attempted by voter: " + voter.getCnp());
@@ -126,7 +123,6 @@ public class VotingSystem {
                 ballot.castVote(option);
                 blockchain.addBlock(List.of(encryptedVote));
 
-                // Save the vote to the database using CNP
                 voteDAO.saveVote(voter.getCnp(), ballotId, option);
                 logAction("Vote successfully cast by voter: " + voter.getCnp());
             } else {
@@ -180,18 +176,15 @@ public class VotingSystem {
             System.out.println("Ballot Type: " + type);
             System.out.println("----------------");
 
-            // Display all options, including those with zero votes
             for (String option : options) {
                 int votes = results.getOrDefault(option, 0);
                 System.out.println(option + ": " + votes + " votes");
             }
 
-            // Calculate and display total votes
             int totalVotes = results.values().stream().mapToInt(Integer::intValue).sum();
             System.out.println("----------------");
             System.out.println("Total votes cast: " + totalVotes);
 
-            // Display percentage for each option
             if (totalVotes > 0) {
                 System.out.println("\nPercentage Distribution:");
                 for (String option : options) {

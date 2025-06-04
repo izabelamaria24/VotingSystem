@@ -86,20 +86,17 @@ public class Main {
 
         BallotType ballotType = getBallotType(scanner);
 
-        // Get all ballots of the selected type
         List<Map<String, Object>> ballots = votingSystem.getAllBallotsOfType(ballotType);
         if (ballots.isEmpty()) {
             System.out.println("No ballots available for this type!");
             return;
         }
 
-        // Display available ballots
         displayAvailableBallots(ballots);
 
-        // Let user choose a specific ballot
         System.out.print("Enter Ballot ID: ");
         int ballotId = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Enter your vote: ");
         String voteOption = scanner.nextLine();
@@ -145,20 +142,18 @@ public class Main {
         System.out.println("\nChoose ballot type to view results:");
         BallotType ballotType = getBallotType(scanner);
 
-        // Get all ballots of the selected type
         List<Map<String, Object>> ballots = votingSystem.getAllBallotsOfType(ballotType);
         if (ballots.isEmpty()) {
             System.out.println("No ballots available for this type!");
             return;
         }
 
-        // Display available ballots
         System.out.println("\nSelect a ballot to view results:");
         displayAvailableBallots(ballots);
 
         System.out.print("Enter Ballot ID: ");
         int ballotId = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         votingSystem.displayBallotResults(ballotType, ballotId);
     }

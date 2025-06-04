@@ -51,7 +51,7 @@ public class VoterDAO {
             stmt.setString(1, cnp);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Voter(rs.getString("cnp")); // Generate keys dynamically
+                return new Voter(rs.getString("cnp"));
             }
         }
         return null;

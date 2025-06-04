@@ -5,8 +5,6 @@ public class IssueBallot extends Ballot {
     private List<String> issues;
     private int[] votes;
 
-    // votes will be yes/no for this type of ballot
-
     public IssueBallot(List<String> issues) {
         super(BallotType.ISSUE_BALLOT);
         this.issues = issues;

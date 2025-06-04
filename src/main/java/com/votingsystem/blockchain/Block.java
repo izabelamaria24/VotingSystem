@@ -40,7 +40,7 @@ public class Block {
     }
 
     public void mineBlock(int difficulty) {
-        String target = "0".repeat(difficulty); // Target hash prefix (e.g., "0000" for difficulty 4)
+        String target = "0".repeat(difficulty);
         System.out.println("Mining block...");
         while (!hash.substring(0, difficulty).equals(target)) {
             nonce++;

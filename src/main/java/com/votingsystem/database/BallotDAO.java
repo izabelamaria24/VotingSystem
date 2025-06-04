@@ -84,7 +84,7 @@ public class BallotDAO {
             if (rs.next()) {
                 return rs.getInt("id");
             }
-            return -1; // Return -1 if no ballot found
+            return -1;
         }
     }
 
